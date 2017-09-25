@@ -13,6 +13,16 @@ class ListItemCell: UITableViewCell {
     @IBOutlet weak var listItem: UILabel!
     @IBOutlet weak var completedLabel: UILabel!
     
+    func decorate(listItem: String, checked: Bool) {
+        self.listItem.text = listItem
+        
+        if checked {
+            self.completedLabel.text = "✓"
+        } else {
+            self.completedLabel.text = ""
+        }
+        self.backgroundColor = .clear
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

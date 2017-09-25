@@ -11,15 +11,16 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
-    var listItems: [(String, Bool)] = []
+    var listItems: [(title: String, checked: Bool)] = []
 
-    @IBOutlet weak var listTBLV: UITableView!
+   
+    @IBOutlet weak var listTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        listTBLV.delegate = self
-        listTBLV.dataSource = self
+        listTableView.delegate = self
+        listTableView.dataSource = self
         
         
     }
@@ -31,14 +32,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listItem") as! ListItemCell
-            cell.listItem.text = listItems[indexPath.row].0
-        
-        if listItems[indexPath.row].1 {
-            cell.completedLabel.text = "✓"
-        } else {
-            cell.completedLabel.text = ""
-        }
-        cell.backgroundColor = .clear
+       
+        cell.decorate(listItem: listItems[indexPath.row].title, checked: listItems[indexPath.row].checked)
         return cell
     }
     
@@ -55,7 +50,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self.listItems.append((textField.text!, false))
                 }
             }
-            self.listTBLV.reloadData()
+            self.listTableView.reloadData()
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .default)
@@ -78,7 +73,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let check = UITableViewRowAction(style: .normal, title: "Check") { (action, indexPath) in
             self.listItems[indexPath.row].1 = true
-            self.listTBLV.reloadData()
+            self.listTableView.reloadData()
             
         }
         
